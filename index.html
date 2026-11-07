@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quant_cao · Chart Review</title>
+  <link rel="stylesheet" href="/assets/app.css">
+  <script defer src="/vendor/lightweight-charts.standalone.production.js"></script>
+  <script defer src="/assets/app.js"></script>
+</head>
+<body>
+  <header>
+    <div class="brand"><span class="mark">Q</span><div><h1>Quant_cao</h1><p>CHART REVIEW <small lang="zh">历史图表复核</small></p></div></div>
+    <div class="header-note">Public viewer <small lang="zh">公开查看器</small><span class="local">LOCAL · 127.0.0.1</span></div>
+  </header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">A CLEARER VIEW OF THE PAST</p><h2>Explore a monthly watchlist.<small lang="zh">查看每月观察名单与历史行情。</small></h2></div><p class="demo">Fictional demo data<small lang="zh">演示行情均为虚构</small></p></section>
+    <div class="workspace">
+      <aside>
+        <label for="month">Watchlist month <small lang="zh">观察月份</small></label>
+        <select id="month" aria-label="Watchlist month"></select>
+        <p class="list-heading">SYMBOLS <small lang="zh">股票列表</small></p>
+        <div id="symbols" role="group" aria-label="Watchlist symbols"></div>
+        <p class="aside-note">Manually supplied watchlists.<small lang="zh">名单由用户手动提供。</small></p>
+      </aside>
+      <section class="chart-panel">
+        <div class="chart-heading"><div><p class="eyebrow" id="symbol">—</p><h3 id="name">Loading…</h3><p id="cutoff" class="cutoff"></p></div><div class="timeframes" role="group" aria-label="Timeframe"><button data-frame="day" class="active">Daily <small lang="zh">日</small></button><button data-frame="week">Weekly <small lang="zh">周</small></button><button data-frame="month">Monthly <small lang="zh">月</small></button></div></div>
+        <div id="status" role="status" aria-live="polite">Reading local data… / 正在读取本地数据…</div>
+        <div id="chart" aria-label="Historical candlestick and volume chart"></div>
+        <div class="chart-footer"><span>Only data at or before the saved cutoff.<small lang="zh">仅展示保存的历史截止日及以前的数据。</small></span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">Charts by TradingView</a></div>
+      </section>
+    </div>
+    <footer>Research interface · No automated selection logic is included.<small lang="zh">研究展示界面；不包含自动选股逻辑。</small></footer>
+  </main>
+</body>
+</html>

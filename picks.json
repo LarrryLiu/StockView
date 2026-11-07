@@ -1,0 +1,10 @@
+{
+  "2025-11": [
+    {"symbol": "DEMO_A", "name": "Fictional Alpha", "cutoff": "2025-11-28"},
+    {"symbol": "DEMO_B", "name": "Fictional Beta", "cutoff": "2025-11-28"}
+  ],
+  "2025-12": [
+    {"symbol": "DEMO_A", "name": "Fictional Alpha", "cutoff": "2025-12-31"},
+    {"symbol": "DEMO_B", "name": "Fictional Beta", "cutoff": "2025-12-31"}
+  ]
+}
