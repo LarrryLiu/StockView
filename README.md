@@ -25,6 +25,20 @@ The default demo works independently with fictional data. Private mode requires 
 
 <sub>默认虚构演示可独立运行。私有策略模式需要先取得权限、克隆私有仓库并安装依赖；GitHub 提供的是代码访问，不是在线策略接口，浏览器不会收到仓库凭据或策略源代码。</sub>
 
+## Historical result screenshots
+
+These screenshots show actual saved selections at the **31 July 2026** cutoff, displayed through the public framework in authorized private mode. They are interface examples, not profit claims. Only watchlist names and price charts are shown; strategy rules, parameters and scores are omitted. For readability, the local screenshot export retains the last 252 available daily bars per symbol. Prices are shown as supplied, without viewer-side corporate-action adjustments.
+
+<sub>两张截图展示截至 2026 年 7 月 31 日的真实已保存筛选结果，由授权私有模式下的公开框架呈现。它们用于展示界面，不代表收益证明；仅显示名单与行情，不显示规则、参数或评分。截图使用每只股票最后 252 条可用日线，查看器本身不复权。</sub>
+
+**Daily result view / 日线结果展示**
+
+![Historical private-engine output — daily chart](docs/images/results-daily.jpg)
+
+**Weekly result view / 周线结果展示**
+
+![Historical private-engine output — weekly chart](docs/images/results-weekly.jpg)
+
 ## Features
 
 - **Daily, weekly and monthly candles** with volume and interactive zoom. <br><sub>日／周／月 K 线、成交量及交互缩放。</sub>
@@ -92,12 +106,14 @@ The viewer stays on loopback. Authorized private results are visible locally; no
 }
 ```
 
-```mermaid
-flowchart LR
-    A[Manual watchlists] --> C[Local Flask viewer]
-    B[Local daily CSVs] --> C
-    C --> D[Saved cutoff]
-    D --> E[Daily / weekly / monthly charts]
+```text
+Manual watchlists / authorized private-engine results
+                         |
+                  Local chart framework
+                         |
+               Saved historical cutoff
+                         |
+             Daily / weekly / monthly charts
 ```
 
 ## Project layout
