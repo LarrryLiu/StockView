@@ -48,7 +48,7 @@
         time: bar.time, value: bar.volume, color: bar.close >= bar.open ? "#307c5b44" : "#bb686044",
       })));
       chart.timeScale().fitContent();
-      status.textContent = `${payload.bars.length} candles · ${state.frame} · Fictional demo / 虚构演示`;
+      status.textContent = `${payload.bars.length} candles · ${state.frame} · Local data / 本地数据`;
     } catch (error) { if (sequence === state.request) showError(error); }
   }
   function renderSymbols() {
@@ -76,8 +76,16 @@
   }));
   new ResizeObserver(() => { if (chart) chart.resize(byId("chart").clientWidth, byId("chart").clientHeight); }).observe(byId("chart"));
   try {
+    const mode = await getJson("/api/mode");
+    if (mode.private_strategy) {
+      byId("data-kind").replaceChildren();
+      byId("data-kind").append("Private strategy output");
+      const note = document.createElement("small");
+      note.lang = "zh"; note.textContent = "私有策略本机结果";
+      byId("data-kind").append(note);
+    }
     state.lists = await getJson("/api/watchlists");
-    const months = Object.keys(state.lists).sort().reverse();
+    const months = Object.keys(state.lists).filter((month) => state.lists[month].length).sort().reverse();
     if (!months.length) throw new Error("No watchlists. / 暂无观察名单。");
     for (const month of months) {
       const option = document.createElement("option"); option.value = month; option.textContent = month; byId("month").append(option);

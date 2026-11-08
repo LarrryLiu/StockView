@@ -4,16 +4,26 @@
 
 <sub>面向月度观察名单的本地 K 线查看器。</sub>
 
-![Local tests](https://img.shields.io/badge/local_tests-11_passed-brightgreen)
+![Local tests](https://img.shields.io/badge/local_tests-14_passed-brightgreen)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
 
-Review daily, weekly and monthly price charts from local CSV files. Watchlists are supplied manually, and each chart respects a saved historical cutoff. The included demo uses entirely fictional prices.
+Review daily, weekly and monthly price charts from local CSV files. Watchlists are supplied manually or by an authorized private engine, and each chart respects a saved historical cutoff. The included demo uses entirely fictional prices.
 
-<sub>从本地 CSV 查看日、周、月 K 线；名单由用户手动提供，图表按保存的历史截止日截取。演示行情完全虚构。</sub>
+<sub>从本地 CSV 查看日、周、月 K 线；名单由手动提供或授权私有引擎生成，图表按保存的历史截止日截取。演示行情完全虚构。</sub>
 
-The automated selection engine, proprietary rules, parameters, weights, research scripts and actual selection results are maintained separately in a **private repository**. This public project contains the presentation interface and generic data handling only. It does not connect to the private engine.
+## Strategy privacy
 
-<sub>自动选股引擎、非公开规则、参数、权重、研究脚本和真实筛选结果均保存在独立的私有仓库。公开版仅包含展示界面和通用数据处理，不连接私有引擎。</sub>
+The underlying trading strategy was contributed by another person. To protect their privacy and confidential work, its specific rules and implementation cannot be disclosed publicly. The core strategy, parameters, configuration and research code are stored in [StockView-private](https://github.com/LarrryLiu/StockView-private), which requires explicitly granted access.
+
+<sub>底层交易策略来自他人的贡献。为保护其隐私和非公开研究，具体策略规则及实现不对外开放；核心策略、参数、配置和研究代码保存在需要授权访问的私有仓库中。</sub>
+
+This public repository primarily demonstrates the application framework, chart interface and generic data handling. It does not include the core strategy. When strategy computation is needed, the launcher delegates it to the private repository's local entry point; the public framework contains no replacement strategy or embedded private parameters.
+
+<sub>本公开仓库主要展示应用框架、图表界面和通用数据处理，不包含核心策略。需要策略计算时，启动程序调用私有仓库本地副本的入口，公开框架中不内置替代策略或私有参数。</sub>
+
+The default demo works independently with fictional data. Private mode requires an authorized local checkout and its dependencies. GitHub provides source access; it is not a hosted strategy API, and the browser never receives repository credentials or strategy source.
+
+<sub>默认虚构演示可独立运行。私有策略模式需要先取得权限、克隆私有仓库并安装依赖；GitHub 提供的是代码访问，不是在线策略接口，浏览器不会收到仓库凭据或策略源代码。</sub>
 
 ## Features
 
@@ -46,6 +56,26 @@ On Windows PowerShell, use `python` instead of `python3`, and activate the envir
 
 <sub>Windows PowerShell 中将 `python3` 替换为 `python`，并使用上述 Windows 路径激活环境。本次未进行 Windows 实机验证。</sub>
 
+## Authorized private strategy mode
+
+After obtaining access, clone the private repository alongside this project and install its dependencies into the same Python environment. Replace the configuration and input paths below with your authorized local files. No credentials belong in command arguments or public configuration files.
+
+<sub>获得授权后，将私有仓库克隆到本项目旁边，并在同一 Python 环境安装依赖。请将下面的配置及数据路径替换为你已获授权的本地文件；不要把凭据写入命令参数或公开配置。</sub>
+
+```bash
+git clone https://github.com/LarrryLiu/StockView-private.git ../StockView-private
+python -m pip install -r ../StockView-private/requirements.txt
+python launch.py --private-root ../StockView-private --private-config /path/to/private-config.yaml --private-input /path/to/private-data
+```
+
+`launch.py` calls `viewer_bridge.py` inside the private checkout using a local subprocess. That private entry point owns all strategy computation and returns only watchlists and daily chart data. Generated files remain under the private checkout's Git-ignored `.viewer-exports/` directory. The tracked public `picks.json` and demo CSVs are not overwritten. If private access, configuration or computation fails, private mode stops instead of silently displaying the demo.
+
+<sub>启动程序通过本机子进程调用私有副本中的入口，全部策略计算由该入口完成，仅返回名单和日线图表数据。生成文件保存在私有副本中被 Git 忽略的目录，不覆盖公开名单或演示数据；缺少权限、配置或计算失败时停止启动，不会悄悄切换到演示。</sub>
+
+The viewer stays on loopback. Authorized private results are visible locally; no result upload or public strategy endpoint is created.
+
+<sub>查看器仍仅监听本机，授权后的私有结果仅供本地查看；此流程不上传结果，也不建立公开策略接口。</sub>
+
 ## Your own watchlist
 
 1. Place one CSV per symbol in `collected_stocks/`. See the [data format](docs/DATA_FORMAT.md).
@@ -74,6 +104,7 @@ flowchart LR
 
 | Path | Purpose |
 | --- | --- |
+| `launch.py` | Optional delegation to an authorized private checkout. <br><sub>按需调用已授权的私有副本。</sub> |
 | `viewer.py` | CSV loading, cutoff handling and read-only chart endpoints. <br><sub>通用 CSV 加载、历史截取与只读图表接口。</sub> |
 | `index.html`, `assets/` | Bilingual chart interface. <br><sub>双语图表界面。</sub> |
 | `picks.json` | Manually supplied fictional watchlists. <br><sub>手动填写的虚构观察名单。</sub> |
@@ -88,9 +119,9 @@ python -m pip install -r requirements-dev.txt
 python -m pytest -q
 ```
 
-Local publication checks: **11 tests passed** on Python 3.12. An optional [GitHub Actions template](docs/ci-workflow.example.yml) is included for later setup. The application binds only to `127.0.0.1:5051`. Publishing the repository on GitHub shares the source code; it does not deploy a live website or expose the private strategy.
+Local publication checks: **14 tests passed** on Python 3.12. An optional [GitHub Actions template](docs/ci-workflow.example.yml) is included for later setup. The application binds only to `127.0.0.1:5051`. Publishing the repository on GitHub shares the source code; it does not deploy a live website or expose the private strategy.
 
-<sub>本次在 Python 3.12 上通过 11 项本地测试，并附带可选的自动测试配置模板。应用仅监听本机地址；上传到 GitHub 是托管源代码，不会自动部署在线网站，也不会开放私有策略。</sub>
+<sub>本次在 Python 3.12 上通过 14 项本地测试，并附带可选的自动测试配置模板。应用仅监听本机地址；上传到 GitHub 是托管源代码，不会自动部署在线网站，也不会开放私有策略。</sub>
 
 ## Credits and scope
 

@@ -14,14 +14,14 @@
     <div class="header-note">Public viewer <small lang="zh">公开查看器</small><span class="local">LOCAL · 127.0.0.1</span></div>
   </header>
   <main>
-    <section class="intro"><div><p class="eyebrow">A CLEARER VIEW OF THE PAST</p><h2>Explore a monthly watchlist.<small lang="zh">查看每月观察名单与历史行情。</small></h2></div><p class="demo">Fictional demo data<small lang="zh">演示行情均为虚构</small></p></section>
+    <section class="intro"><div><p class="eyebrow">A CLEARER VIEW OF THE PAST</p><h2>Explore a monthly watchlist.<small lang="zh">查看每月观察名单与历史行情。</small></h2></div><p class="demo" id="data-kind">Fictional demo data<small lang="zh">演示行情均为虚构</small></p></section>
     <div class="workspace">
       <aside>
         <label for="month">Watchlist month <small lang="zh">观察月份</small></label>
         <select id="month" aria-label="Watchlist month"></select>
         <p class="list-heading">SYMBOLS <small lang="zh">股票列表</small></p>
         <div id="symbols" role="group" aria-label="Watchlist symbols"></div>
-        <p class="aside-note">Manually supplied watchlists.<small lang="zh">名单由用户手动提供。</small></p>
+        <p class="aside-note">Externally supplied watchlists.<small lang="zh">名单由外部提供。</small></p>
       </aside>
       <section class="chart-panel">
         <div class="chart-heading"><div><p class="eyebrow" id="symbol">—</p><h3 id="name">Loading…</h3><p id="cutoff" class="cutoff"></p></div><div class="timeframes" role="group" aria-label="Timeframe"><button data-frame="day" class="active">Daily <small lang="zh">日</small></button><button data-frame="week">Weekly <small lang="zh">周</small></button><button data-frame="month">Monthly <small lang="zh">月</small></button></div></div>

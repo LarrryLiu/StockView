@@ -8,6 +8,7 @@ from __future__ import annotations
 import csv
 import json
 import math
+import os
 import re
 from datetime import date
 from pathlib import Path
@@ -15,8 +16,8 @@ from pathlib import Path
 from flask import Flask, abort, jsonify, request, send_from_directory
 
 BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "collected_stocks"
-PICKS_FILE = BASE_DIR / "picks.json"
+DATA_DIR = Path(os.environ.get("STOCKVIEW_DATA_DIR", BASE_DIR / "collected_stocks"))
+PICKS_FILE = Path(os.environ.get("STOCKVIEW_PICKS_FILE", BASE_DIR / "picks.json"))
 SYMBOL = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$")
 MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 app = Flask(__name__, static_folder=None)
@@ -125,6 +126,11 @@ def vendor(filename):
 @app.get("/healthz")
 def health():
     return jsonify(app="stockview-public-viewer", status="ok")
+
+
+@app.get("/api/mode")
+def mode():
+    return jsonify(private_strategy=os.environ.get("STOCKVIEW_PRIVATE_MODE") == "1")
 
 
 @app.get("/api/watchlists")
