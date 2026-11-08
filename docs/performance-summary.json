@@ -1,0 +1,81 @@
+{
+  "scope": "Reconstructed in-sample research portfolio from saved historical selections; not audited or live performance",
+  "start": "2020-02-03",
+  "end": "2026-08-05",
+  "initial_capital_cny": 1000000.0,
+  "saved_selection_records": 673,
+  "closed_trades": 669,
+  "ending_open_positions": 4,
+  "annual": [
+    {
+      "year": 2020,
+      "start": "2020-02-03",
+      "end": "2020-12-31",
+      "net_return": 0.32372755778093354,
+      "closed_trades": 83,
+      "winning_trades": 57,
+      "trade_win_rate": 0.6867469879518072,
+      "max_drawdown": -0.11292737181753831
+    },
+    {
+      "year": 2021,
+      "start": "2021-01-04",
+      "end": "2021-12-31",
+      "net_return": 0.04681412923154049,
+      "closed_trades": 122,
+      "winning_trades": 59,
+      "trade_win_rate": 0.48360655737704916,
+      "max_drawdown": -0.11444807557907843
+    },
+    {
+      "year": 2022,
+      "start": "2022-01-04",
+      "end": "2022-12-30",
+      "net_return": -0.011399143968341185,
+      "closed_trades": 92,
+      "winning_trades": 50,
+      "trade_win_rate": 0.5434782608695652,
+      "max_drawdown": -0.22424296514566378
+    },
+    {
+      "year": 2023,
+      "start": "2023-01-03",
+      "end": "2023-12-29",
+      "net_return": 0.07074150873913498,
+      "closed_trades": 120,
+      "winning_trades": 63,
+      "trade_win_rate": 0.525,
+      "max_drawdown": -0.10774364397514269
+    },
+    {
+      "year": 2024,
+      "start": "2024-01-02",
+      "end": "2024-12-31",
+      "net_return": -0.20452813148410287,
+      "closed_trades": 101,
+      "winning_trades": 41,
+      "trade_win_rate": 0.40594059405940597,
+      "max_drawdown": -0.2494796923424052
+    },
+    {
+      "year": 2025,
+      "start": "2025-01-02",
+      "end": "2025-12-31",
+      "net_return": 0.18688509140423948,
+      "closed_trades": 73,
+      "winning_trades": 43,
+      "trade_win_rate": 0.589041095890411,
+      "max_drawdown": -0.1127659574468084
+    },
+    {
+      "year": 2026,
+      "start": "2026-01-05",
+      "end": "2026-08-05",
+      "net_return": -0.11045560170987334,
+      "closed_trades": 78,
+      "winning_trades": 29,
+      "trade_win_rate": 0.3717948717948718,
+      "max_drawdown": -0.20818936713245784
+    }
+  ]
+}

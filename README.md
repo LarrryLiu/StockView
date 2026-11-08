@@ -39,6 +39,40 @@ These screenshots show actual saved selections at the **31 July 2026** cutoff, d
 
 ![Historical private-engine output — weekly chart](docs/images/results-weekly.jpg)
 
+## Annual portfolio backtest
+
+**Reconstructed research simulation — not live or audited performance.** These results were recalculated from the saved historical selection lists using a daily, self-financing, long-only portfolio. They do not reuse the legacy per-stock scenario-return fields. All years, including losses, are shown.
+
+<sub>以下为重建的研究模拟，不是实盘或审计业绩。结果基于已保存的历史名单，以每日资金与持仓账本重新计算，不使用旧版个股情景收益字段；盈利和亏损年份均完整列示。</sub>
+
+| Year | Observed period | Winning / closed trades | Trade win rate | Net portfolio return | Within-year max drawdown |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 2020 (partial) | 2020-02-03 – 2020-12-31 | 57 / 83 | 68.67% | +32.37% | -11.29% |
+| 2021 | 2021-01-04 – 2021-12-31 | 59 / 122 | 48.36% | +4.68% | -11.44% |
+| 2022 | 2022-01-04 – 2022-12-30 | 50 / 92 | 54.35% | -1.14% | -22.42% |
+| 2023 | 2023-01-03 – 2023-12-29 | 63 / 120 | 52.50% | +7.07% | -10.77% |
+| 2024 | 2024-01-02 – 2024-12-31 | 41 / 101 | 40.59% | -20.45% | -24.95% |
+| 2025 | 2025-01-02 – 2025-12-31 | 43 / 73 | 58.90% | +18.69% | -11.28% |
+| 2026 (partial) | 2026-01-05 – 2026-08-05 | 29 / 78 | 37.18% | -11.05% | -20.82% |
+
+<sub>“净组合收益率”由年末净值相对上年末净值计算；首年相对初始资金计算。2020 年从 2 月 3 日开始，2026 年截至 8 月 5 日，均为不完整年度，不做年化。胜率为该年平仓且扣除模拟成本后盈利的交易数／该年全部平仓交易数；未平仓交易不计入胜率。</sub>
+
+The run starts with **CNY 1,000,000**, covers **673 saved stock-month selections** across **79 signal months**, and records **669 closed trades** plus **4 positions still open** at the end. Daily equity includes marked-to-market open positions and idle cash. No terminal liquidation or future exit proceeds are assumed. A win rate above 50% can coexist with a negative portfolio return because trade sizes and loss magnitudes differ.
+
+<sub>初始资金为人民币 100 万元，使用 79 个信号月份、673 条股票—月份记录；共 669 笔平仓交易，期末仍有 4 笔持仓。净值包含未平仓持仓的期末估值及闲置现金，不虚构期末清仓或未来卖出所得。交易金额及盈亏幅度不同，因此胜率超过 50% 也可能产生组合亏损。</sub>
+
+**Execution assumptions.** Saved month-end signals are acted on at the next available market-session open. New allocations are equal-weighted across the available cash budget; exits use the private policy or the next monthly rebalance. The simulator respects T+1, skips unavailable or one-price limit-up entries, defers unavailable/locked-down sales, and retains cash when there is no selection. Modeled costs are 0.30% adverse slippage and 0.025% commission per side, plus sell-side stamp-duty assumptions of 0.10% before 28 August 2023 and 0.05% thereafter. Fractional sizing is used; minimum commissions, board lots, transfer fees, queue priority and market impact are not modeled.
+
+<sub>执行口径：月末信号在下一可用交易日开盘执行，按可用现金等权分配，由私有退出规则或下一月调仓退出；考虑 T+1、无法交易及一字涨停无法买入，卖出受阻时延后，无名单时保留现金。双边各计 0.30% 不利滑点及 0.025% 佣金，卖出印花税模拟值在 2023 年 8 月 28 日前为 0.10%，之后为 0.05%。采用可分割持仓，未模拟最低佣金、整手限制、过户费、排队成交和市场冲击。</sub>
+
+**Material limitations.** This is an in-sample reconstruction from saved signals, not an independent out-of-sample test or proof of profitability. Historical security/ST/delisting metadata and adjustment factors are not fully verified; corporate-action factors are reconstructed from the source price series. Daily bars approximate intraday limit-order fills. Two malformed source rows were quarantined; 19 portfolio valuation dates carry one position at its last valid price. These gaps can affect returns and drawdowns. The two chart screenshots above use source OHLC; the portfolio calculation uses its reconstructed adjusted-price basis. Detailed strategy rules and the calculation code remain private; only the authorized screenshots and annual aggregates are published.
+
+<sub>重要限制：这是基于已有信号的样本内重建，非独立样本外检验，也不证明策略盈利。历史证券、ST、退市信息及复权因子尚未完全核验，复权因子由原始价格序列推算，日线仅近似盘中限价单成交。两条无效数据行已隔离，19 个组合估值日有一笔持仓沿用上次有效价格，可能影响收益及回撤。上方截图使用源 OHLC，组合计算使用重建的复权价格口径；策略规则及计算代码保持私有，仅公开经授权的截图和年度汇总。</sub>
+
+The exact displayed aggregates are also available in [performance-summary.json](docs/performance-summary.json).
+
+<sub>表格对应的精确汇总数值见上面的 JSON 文件。</sub>
+
 ## Features
 
 - **Daily, weekly and monthly candles** with volume and interactive zoom. <br><sub>日／周／月 K 线、成交量及交互缩放。</sub>
@@ -86,9 +120,9 @@ python launch.py --private-root ../StockView-private --private-config /path/to/p
 
 <sub>启动程序通过本机子进程调用私有副本中的入口，全部策略计算由该入口完成，仅返回名单和日线图表数据。生成文件保存在私有副本中被 Git 忽略的目录，不覆盖公开名单或演示数据；缺少权限、配置或计算失败时停止启动，不会悄悄切换到演示。</sub>
 
-The viewer stays on loopback. Authorized private results are visible locally; no result upload or public strategy endpoint is created.
+The viewer stays on loopback. Authorized private results are visible locally; the runtime does not automatically upload results or create a public strategy endpoint.
 
-<sub>查看器仍仅监听本机，授权后的私有结果仅供本地查看；此流程不上传结果，也不建立公开策略接口。</sub>
+<sub>查看器仍仅监听本机，授权后的私有结果仅供本地查看；此运行流程不自动上传结果，也不建立公开策略接口。</sub>
 
 ## Your own watchlist
 
@@ -141,9 +175,9 @@ Local publication checks: **14 tests passed** on Python 3.12. An optional [GitHu
 
 ## Credits and scope
 
-Prepared with AI-assisted implementation. Local chart rendering uses TradingView Lightweight Charts; reference attribution is retained in [Third-party notices](THIRD_PARTY_NOTICES.md). The public viewer makes no investment-performance claim.
+Prepared with AI-assisted implementation. Local chart rendering uses TradingView Lightweight Charts; reference attribution is retained in [Third-party notices](THIRD_PARTY_NOTICES.md). The historical simulation is conditional on the disclosed assumptions and does not claim live profitability or guaranteed returns.
 
-<sub>代码使用 AI 辅助实现，图表由 TradingView Lightweight Charts 提供；第三方声明保留参考来源。本查看器不作投资收益声明。</sub>
+<sub>代码使用 AI 辅助实现，图表由 TradingView Lightweight Charts 提供；第三方声明保留参考来源。历史模拟受所列假设限制，不宣称实盘盈利或保证收益。</sub>
 
 Original public viewer code is licensed under [MIT](LICENSE). Third-party components retain their original licenses. This license does not cover the separately maintained private strategy.
 
