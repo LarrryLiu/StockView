@@ -1,4 +1,4 @@
-# Quant_cao · Chart Review
+# StockView · Chart Review
 
 **A local candlestick viewer for monthly watchlists.**
 
@@ -29,8 +29,8 @@ Use Python 3.11 or later. Run the following commands from a terminal. Initial de
 <sub>需要 Python 3.11 或更高版本。首次安装依赖需要联网，之后虚构数据演示在本地运行。</sub>
 
 ```bash
-git clone https://github.com/LarrryLiu/Quant_cao.git
-cd Quant_cao
+git clone https://github.com/LarrryLiu/StockView.git
+cd StockView
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt

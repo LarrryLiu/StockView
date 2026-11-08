@@ -124,7 +124,7 @@ def vendor(filename):
 
 @app.get("/healthz")
 def health():
-    return jsonify(app="quant-cao-public-viewer", status="ok")
+    return jsonify(app="stockview-public-viewer", status="ok")
 
 
 @app.get("/api/watchlists")
